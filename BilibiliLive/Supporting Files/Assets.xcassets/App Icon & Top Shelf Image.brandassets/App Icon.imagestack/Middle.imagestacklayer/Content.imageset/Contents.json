@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Group 1-3.png",
+      "filename" : "overlay.png",
       "idiom" : "tv",
       "scale" : "1x"
     },
     {
-      "filename" : "Group 1-2.png",
+      "filename" : "overlay@2x.png",
       "idiom" : "tv",
       "scale" : "2x"
     }
