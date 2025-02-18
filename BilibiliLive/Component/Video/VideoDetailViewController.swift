@@ -158,6 +158,19 @@ class VideoDetailViewController: UIViewController {
         effectBlurControlAnimator.addAnimations {
             self.effectContainerView.effect = UIBlurEffect(style: .regular)
         }
+
+        NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification).sink { [weak self] _ in
+            self?.resetBlurEffect()
+        }.store(in: &subscriptions)
+    }
+
+    func resetBlurEffect() {
+        effectContainerView.effect = nil
+        effectBlurControlAnimator = UIViewPropertyAnimator(duration: 5, curve: .linear)
+        effectBlurControlAnimator.addAnimations { [weak self] in
+            self?.effectContainerView.effect = UIBlurEffect(style: .regular)
+        }
+        effectBlurControlAnimator.fractionComplete = scrollView.contentOffset.y / view.bounds.height
     }
 
     deinit {
