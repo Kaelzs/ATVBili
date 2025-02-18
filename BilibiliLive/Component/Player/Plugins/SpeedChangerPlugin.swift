@@ -59,11 +59,13 @@ class SpeedChangerPlugin: NSObject, CommonPlayerPlugin {
                 make.height.equalTo(60) // Set a height (optional)
             }
         }
-        notifyView?.isHidden = false
-        notifyView?.text = "播放速度设置为 \(currentPlaySpeed.name)"
+        if currentPlaySpeed.value != 1 {
+            notifyView?.isHidden = false
+            notifyView?.text = "播放速度设置为 \(currentPlaySpeed.name)"
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.fadeOutNotifyView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.fadeOutNotifyView()
+            }
         }
     }
 
