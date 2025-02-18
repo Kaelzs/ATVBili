@@ -97,7 +97,10 @@ extension DanmuViewPlugin: CommonPlayerPlugin {
         let danmuAILevelMenu = UIMenu(title: "弹幕屏蔽等级", options: [.displayInline, .singleSelection], children: [Int32](1...10).map { level in
             UIAction(title: "\(level)", state: level == Settings.danmuAILevel ? .on : .off) { _ in Settings.danmuAILevel = level }
         })
-        let danmuSettingMenu = UIMenu(title: "弹幕设置", image: UIImage(systemName: "keyboard.badge.ellipsis"), children: [danmuDurationMenu, danmuAILevelMenu])
+        let danmuOpacityMenu = UIMenu(title: "弹幕透明度", options: [.displayInline, .singleSelection], children: [0.1, 0.3, 0.5, 0.7, 0.9, 1.0].map { opacity in
+            UIAction(title: "\(opacity)", state: opacity == Settings.danmuOpacity ? .on : .off) { _ in Settings.danmuOpacity = opacity }
+        })
+        let danmuSettingMenu = UIMenu(title: "弹幕设置", image: UIImage(systemName: "keyboard.badge.ellipsis"), children: [danmuDurationMenu, danmuOpacityMenu, danmuAILevelMenu])
 
         return [danmuAction, danmuSettingMenu]
     }

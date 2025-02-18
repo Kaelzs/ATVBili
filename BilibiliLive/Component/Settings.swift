@@ -52,6 +52,9 @@ enum Settings {
     @UserDefaultCodable("Settings.danmuDuration", defaultValue: 8)
     static var danmuDuration: Double
 
+    @UserDefault("Settings.danmuOpacity", defaultValue: 1)
+    static var danmuOpacity: Double
+
     @UserDefault("Settings.losslessAudio", defaultValue: false)
     static var losslessAudio: Bool
 

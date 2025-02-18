@@ -25,6 +25,8 @@ class DanmakuTextCellModel: DanmakuCellModel, Equatable {
 
     var track: UInt?
 
+    var opacity: Double = Settings.danmuOpacity
+
     var displayTime: Double = Settings.danmuDuration
 
     var type: DanmakuCellType = .floating

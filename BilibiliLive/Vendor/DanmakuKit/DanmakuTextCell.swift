@@ -26,6 +26,8 @@ class DanmakuTextCell: DanmakuCell {
         let text = NSString(string: model.text)
         context.setLineWidth(2)
         context.setLineJoin(.round)
+        context.setAlpha(model.opacity)
+
         context.saveGState()
         context.setTextDrawingMode(.stroke)
 
