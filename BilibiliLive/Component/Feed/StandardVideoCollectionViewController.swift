@@ -117,4 +117,13 @@ class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, 
     @objc private func didBecomeActive() {
         autoReloadIfNeed()
     }
+
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        super.pressesEnded(presses, with: event)
+        guard let buttonPress = presses.first?.type else { return }
+        if buttonPress == .playPause {
+            print("self reload \(self)")
+            reloadData()
+        }
+    }
 }
