@@ -23,7 +23,6 @@ class VideoDetailViewController: UIViewController {
 
     private var effectBlurControlAnimator = UIViewPropertyAnimator(duration: 5, curve: .linear)
 
-    @IBOutlet var contentBackgroundImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
 
     @IBOutlet var upButton: BLCustomTextButton!
