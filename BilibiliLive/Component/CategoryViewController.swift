@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CategoryViewController: UIViewController, BLTabBarContentVCProtocol {
+class CategoryViewController: UIViewController, RefreshableTab {
     struct CategoryDisplayModel {
         let title: String
         let contentVC: UIViewController
@@ -67,7 +67,7 @@ class CategoryViewController: UIViewController, BLTabBarContentVCProtocol {
     }
 
     func reloadData() {
-        (currentViewController as? BLTabBarContentVCProtocol)?.reloadData()
+        (currentViewController as? RefreshableTab)?.reloadData()
     }
 }
 

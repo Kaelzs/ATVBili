@@ -10,7 +10,7 @@ import Kingfisher
 import SwiftyJSON
 import UIKit
 
-class MenusViewController: UIViewController, BLTabBarContentVCProtocol {
+class MenusViewController: UIViewController, RefreshableTab {
     static func create() -> MenusViewController {
         return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(identifier: String(describing: self)) as! MenusViewController
     }
@@ -174,7 +174,7 @@ class MenusViewController: UIViewController, BLTabBarContentVCProtocol {
     }
 
     func reloadData() {
-        (currentViewController as? BLTabBarContentVCProtocol)?.reloadData()
+        (currentViewController as? RefreshableTab)?.reloadData()
     }
 
     func actionLogout() {

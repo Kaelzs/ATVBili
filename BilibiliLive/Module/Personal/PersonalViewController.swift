@@ -43,7 +43,7 @@ private func generateBilibiliGradientImage(size: CGSize) -> UIImage {
     }
 }
 
-class PersonalViewController: UIViewController, BLTabBarContentVCProtocol {
+class PersonalViewController: UIViewController, RefreshableTab {
     struct CellModel {
         let title: String
         var autoSelect: Bool? = true
@@ -149,7 +149,7 @@ class PersonalViewController: UIViewController, BLTabBarContentVCProtocol {
     }
 
     func reloadData() {
-        (currentViewController as? BLTabBarContentVCProtocol)?.reloadData()
+        (currentViewController as? RefreshableTab)?.reloadData()
     }
 
     func actionLogout() {

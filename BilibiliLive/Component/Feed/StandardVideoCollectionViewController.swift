@@ -12,7 +12,7 @@ protocol PlayableData: DisplayData {
     var cid: Int { get }
 }
 
-class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, BLTabBarContentVCProtocol {
+class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, RefreshableTab {
     let collectionVC = FeedCollectionViewController()
     var lastReloadDate = Date()
     var reloadInterval: TimeInterval = 60 * 60

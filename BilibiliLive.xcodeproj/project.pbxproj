@@ -149,7 +149,6 @@
 		F9B5735E260F5F7600771ED5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9B5735C260F5F7600771ED5 /* LaunchScreen.storyboard */; };
 		F9B5736E260F652C00771ED5 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F9B5736D260F652C00771ED5 /* Alamofire */; };
 		F9B57378260F6BB400771ED5 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F9B57377260F6BB400771ED5 /* SwiftyJSON */; };
-		F9B9EAE7261AC6F80045C2C6 /* BLTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9EAE6261AC6F80045C2C6 /* BLTabBarViewController.swift */; };
 		F9B9EAEA261B15020045C2C6 /* FeedCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9EAE9261B15020045C2C6 /* FeedCollectionViewController.swift */; };
 		F9B9EAED261B25E40045C2C6 /* ToViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B9EAEC261B25E40045C2C6 /* ToViewViewController.swift */; };
 		F9D382B426359EF90070508F /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9D382B326359EF90070508F /* ApiRequest.swift */; };
@@ -327,6 +326,7 @@
 		49F918712931E927001D3EC3 /* AvTransportScpd.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AvTransportScpd.xml; sourceTree = "<group>"; };
 		49FB8EBF291F4C520045D5DE /* VMaskProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMaskProvider.swift; sourceTree = "<group>"; };
 		49FB8EE829208EBE0045D5DE /* SidxParseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidxParseUtil.swift; sourceTree = "<group>"; };
+		9F4775AE2D64F23B00B4E4C4 /* RefreshableTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableTab.swift; sourceTree = "<group>"; };
 		9FD595C12D64B73500105FF1 /* BLBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLBackgroundView.swift; sourceTree = "<group>"; };
 		AE2B41542912706700BF2B0B /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		AE2B41562914C02000BF2B0B /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
@@ -361,7 +361,6 @@
 		F9B5735A260F5F7600771ED5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9B5735D260F5F7600771ED5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F9B5735F260F5F7600771ED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F9B9EAE6261AC6F80045C2C6 /* BLTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLTabBarViewController.swift; sourceTree = "<group>"; };
 		F9B9EAE9261B15020045C2C6 /* FeedCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewController.swift; sourceTree = "<group>"; };
 		F9B9EAEC261B25E40045C2C6 /* ToViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToViewViewController.swift; sourceTree = "<group>"; };
 		F9D382B326359EF90070508F /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
@@ -677,6 +676,7 @@
 				49389D5D28AFE6DC00B9DAFD /* Video */,
 				AEA6AB1828FFF3DD007CE72E /* Settings.swift */,
 				490425F629AB54B200CDBC60 /* CategoryViewController.swift */,
+				9F4775AE2D64F23B00B4E4C4 /* RefreshableTab.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -780,7 +780,6 @@
 				F9B57353260F5F7400771ED5 /* AppDelegate.swift */,
 				F9B57357260F5F7400771ED5 /* Main.storyboard */,
 				F927ED8C2610A5A800EAB8E3 /* LoginViewController.swift */,
-				F9B9EAE6261AC6F80045C2C6 /* BLTabBarViewController.swift */,
 				1801D59D2C377DCF001739E5 /* BSCollectionVIew.swift */,
 				1801D59B2C377DC9001739E5 /* BLMenuLineCollectionViewCell.swift */,
 				189D79AF2C3699E500CE6D1D /* MenusViewController.swift */,
@@ -953,7 +952,6 @@
 				492AD70D2BFF33DF007221C8 /* VideoPlayerViewController.swift in Sources */,
 				F9171D6629026AC5002868C7 /* TitleSupplementaryView.swift in Sources */,
 				492138A02CD5CA6000891D56 /* SponsorBlockRequest.swift in Sources */,
-				F9B9EAE7261AC6F80045C2C6 /* BLTabBarViewController.swift in Sources */,
 				498CF2A12B63AABE0009793E /* metablock.c in Sources */,
 				1801D59E2C377DCF001739E5 /* BSCollectionVIew.swift in Sources */,
 				F99D28EA26195EC200F8E66A /* UIView+Layout.swift in Sources */,
@@ -1017,6 +1015,7 @@
 				4933B8912CFC1B070056B04D /* WebRequest+WbiSign.swift in Sources */,
 				494741C6290177BB005D6885 /* UpSpaceViewController.swift in Sources */,
 				496E5A552C01CDBB0062951B /* DebugPlugin.swift in Sources */,
+				9F4775AF2D64F24600B4E4C4 /* RefreshableTab.swift in Sources */,
 				49DA01A0296C466C00EEAE15 /* AVInfoPanelCollectionViewThumbnailCell+Hook.swift in Sources */,
 				492731EE29096677005F5B0A /* HotViewController.swift in Sources */,
 				F927ED8926103CFB00EAB8E3 /* DanmakuTextCellModel.swift in Sources */,

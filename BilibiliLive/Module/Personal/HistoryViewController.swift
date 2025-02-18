@@ -32,7 +32,7 @@ class HistoryViewController: UIViewController {
     }
 }
 
-extension HistoryViewController: BLTabBarContentVCProtocol {
+extension HistoryViewController: RefreshableTab {
     func reloadData() {
         WebRequest.requestHistory { [weak self] datas in
             self?.collectionVC.displayDatas = datas

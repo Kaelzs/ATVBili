@@ -21,11 +21,6 @@ class LoginViewController: UIViewController {
         return loginVC
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        BLTabBarViewController.clearSelected()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         initValidation()
