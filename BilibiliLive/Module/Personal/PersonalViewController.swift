@@ -19,6 +19,30 @@ struct CellModel {
     var action: (() -> Void)? = nil
 }
 
+private func generateBilibiliGradientImage(size: CGSize) -> UIImage {
+    let renderer = UIGraphicsImageRenderer(size: size)
+
+    return renderer.image { context in
+        let cgContext = context.cgContext
+
+        let colors = [
+            UIColor(red: 0.0, green: 0.63, blue: 0.84, alpha: 1.0).cgColor,
+            UIColor(red: 0.9, green: 0.4, blue: 0.6, alpha: 1.0).cgColor,
+            UIColor(red: 0.6, green: 0.4, blue: 0.9, alpha: 1.0).cgColor,
+        ]
+
+        let locations: [CGFloat] = [0.0, 0.75, 1.0]
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+
+        if let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: locations) {
+            let startPoint = CGPoint(x: -0.2, y: 0)
+            let endPoint = CGPoint(x: size.width, y: size.height)
+
+            cgContext.drawLinearGradient(gradient, start: startPoint, end: endPoint, options: [])
+        }
+    }
+}
+
 class PersonalViewController: UIViewController, BLTabBarContentVCProtocol {
     struct CellModel {
         let title: String
@@ -41,6 +65,8 @@ class PersonalViewController: UIViewController, BLTabBarContentVCProtocol {
 
     @IBOutlet var menusLeft: NSLayoutConstraint!
 
+    let bgImageView = UIImageView()
+
     var cellModels = [CellModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +86,15 @@ class PersonalViewController: UIViewController, BLTabBarContentVCProtocol {
             }
         }
         menusLeft.constant = 40
+
+        view.insertSubview(bgImageView, at: 0)
+        bgImageView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(-60)
+        }
+        bgImageView.setBlurEffectView(style: .extraDark)
+        bgImageView.image = generateBilibiliGradientImage(size: CGSize(width: 160, height: 90))
+        bgImageView.contentMode = .scaleAspectFill
     }
 
 //    override func viewWillAppear(_ animated: Bool) {

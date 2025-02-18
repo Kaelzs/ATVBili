@@ -113,6 +113,7 @@
 		49FB8EC0291F4C520045D5DE /* VMaskProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB8EBF291F4C520045D5DE /* VMaskProvider.swift */; };
 		49FB8EE929208EBE0045D5DE /* SidxParseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB8EE829208EBE0045D5DE /* SidxParseUtil.swift */; };
 		695081FB2D0FD9E30063044D /* PocketSVG in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 49078E46291BEA2400F556BD /* PocketSVG */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9FD595C22D64B73A00105FF1 /* BLBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD595C12D64B73500105FF1 /* BLBackgroundView.swift */; };
 		AE2B41552912706700BF2B0B /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2B41542912706700BF2B0B /* SearchResultViewController.swift */; };
 		AE2B41572914C02000BF2B0B /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2B41562914C02000BF2B0B /* Int.swift */; };
 		AE4889B228FE55DA00E8C5CD /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE4889B128FE55DA00E8C5CD /* FavoriteViewController.swift */; };
@@ -326,6 +327,7 @@
 		49F918712931E927001D3EC3 /* AvTransportScpd.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AvTransportScpd.xml; sourceTree = "<group>"; };
 		49FB8EBF291F4C520045D5DE /* VMaskProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMaskProvider.swift; sourceTree = "<group>"; };
 		49FB8EE829208EBE0045D5DE /* SidxParseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidxParseUtil.swift; sourceTree = "<group>"; };
+		9FD595C12D64B73500105FF1 /* BLBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLBackgroundView.swift; sourceTree = "<group>"; };
 		AE2B41542912706700BF2B0B /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		AE2B41562914C02000BF2B0B /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		AE4889B128FE55DA00E8C5CD /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 		4947420D2903B8C9005D6885 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9FD595C12D64B73500105FF1 /* BLBackgroundView.swift */,
 				1836FCC92C32A02300B5503A /* BLCoverView.swift */,
 				1836FCCA2C32A02300B5503A /* BLCoverView.xib */,
 				494741E6290391A7005D6885 /* BLButton.swift */,
@@ -1003,6 +1006,7 @@
 				498CF2972B63AABE0009793E /* encode.c in Sources */,
 				49389D8C28B0A84500B9DAFD /* PersonalViewController.swift in Sources */,
 				498CF2992B63AABE0009793E /* cluster.c in Sources */,
+				9FD595C22D64B73A00105FF1 /* BLBackgroundView.swift in Sources */,
 				495E6E102CDF92AB00689A08 /* Replys+AttritubedString.swift in Sources */,
 				498CF2952B63AABE0009793E /* compress_fragment_two_pass.c in Sources */,
 				F927ED772610395300EAB8E3 /* DanmakuQueuePool.swift in Sources */,

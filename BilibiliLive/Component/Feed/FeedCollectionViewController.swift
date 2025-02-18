@@ -70,7 +70,7 @@ class FeedCollectionViewController: UIViewController {
     let coverView = BLCoverView()
     var nextFocusedIndexPath: IndexPath?
 
-    let bgImageView = UIImageView()
+    let bgImageView = BLBackgroundView()
 
     var backMenuAction: (() -> Void)?
     var didUpdateFocus: (() -> Void)?
@@ -131,7 +131,7 @@ class FeedCollectionViewController: UIViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalToSuperview().offset(-60)
         }
-        bgImageView.setBlurEffectView()
+        bgImageView.addBlur()
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: makeCollectionViewLayout())
         view.addSubview(collectionView)
@@ -310,9 +310,8 @@ extension FeedCollectionViewController: UICollectionViewDelegate {
         print("didUpdateFocusIn")
 
         if let indexPath = context.nextFocusedIndexPath {
-            if let data = dataSource.itemIdentifier(for: indexPath), bgImageView.image == nil {
-                bgImageView.kf.setImage(with: data.data.pic, placeholder: nil, options: nil) { _ in
-                }
+            if let data = dataSource.itemIdentifier(for: indexPath) {
+                bgImageView.setImage(data.data.pic)
             }
 
             if let indexPath = nextFocusedIndexPath {
