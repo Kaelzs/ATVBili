@@ -21,11 +21,14 @@ class VideoDetailViewController: UIViewController {
     @IBOutlet var backgroundImageView: UIImageView!
     @IBOutlet var effectContainerView: UIVisualEffectView!
 
+    private var effectBlurControlAnimator = UIViewPropertyAnimator(duration: 5, curve: .linear)
+
+    @IBOutlet var contentBackgroundImageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
 
     @IBOutlet var upButton: BLCustomTextButton!
     @IBOutlet var followButton: BLCustomButton!
-    @IBOutlet var coverImageView: UIImageView!
+//    @IBOutlet var coverImageView: UIImageView!
     @IBOutlet var playButton: BLCustomButton!
     @IBOutlet var likeButton: BLCustomButton!
     @IBOutlet var coinButton: BLCustomButton!
@@ -33,7 +36,7 @@ class VideoDetailViewController: UIViewController {
     @IBOutlet var favButton: BLCustomButton!
     @IBOutlet var noteView: NoteDetailView!
 
-    @IBOutlet var videoDetalBgImageView: UIImageView!
+//    @IBOutlet var videoDetalBgImageView: UIImageView!
     @IBOutlet var timeView: UIView!
 
     @IBOutlet var actionButtonSpaceView: UIView!
@@ -125,8 +128,8 @@ class VideoDetailViewController: UIViewController {
         view.addLayoutGuide(focusGuide)
         NSLayoutConstraint.activate([
             focusGuide.topAnchor.constraint(equalTo: upButton.topAnchor),
-            focusGuide.leftAnchor.constraint(equalTo: followButton.rightAnchor),
-            focusGuide.rightAnchor.constraint(equalTo: coverImageView.leftAnchor),
+            focusGuide.leftAnchor.constraint(equalTo: upButton.leftAnchor),
+            focusGuide.rightAnchor.constraint(equalTo: followButton.rightAnchor),
             focusGuide.bottomAnchor.constraint(equalTo: upButton.bottomAnchor),
         ])
         focusGuide.preferredFocusEnvironments = [followButton]
@@ -150,6 +153,15 @@ class VideoDetailViewController: UIViewController {
             self?.repliesCollectionViewHeightConstraints.constant = newSize.height
             self?.view.setNeedsLayout()
         }.store(in: &subscriptions)
+
+        effectContainerView.effect = nil
+        effectBlurControlAnimator.addAnimations {
+            self.effectContainerView.effect = UIBlurEffect(style: .regular)
+        }
+    }
+
+    deinit {
+        effectBlurControlAnimator.stopAnimation(true)
     }
 
     override var preferredFocusedView: UIView? {
@@ -313,7 +325,7 @@ class VideoDetailViewController: UIViewController {
 
         avatarImageView.kf.setImage(with: data.avatar, options: [.processor(DownsamplingImageProcessor(size: CGSize(width: 80, height: 80))), .processor(RoundCornerImageProcessor(radius: .widthFraction(0.5))), .cacheSerializer(FormatIndicatedCacheSerializer.png)])
 
-        coverImageView.kf.setImage(with: data.pic)
+//        coverImageView.kf.setImage(with: data.pic)
         backgroundImageView.kf.setImage(with: data.pic)
         recommandCollectionView.superview?.isHidden = data.Related.count == 0
 
@@ -557,6 +569,12 @@ extension VideoDetailViewController: UICollectionViewDataSource {
             return cell
         default:
             return UICollectionViewCell()
+        }
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView === self.scrollView {
+            effectBlurControlAnimator.fractionComplete = scrollView.contentOffset.y / view.bounds.height
         }
     }
 }
