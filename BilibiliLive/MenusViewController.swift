@@ -57,8 +57,9 @@ class MenusViewController: UIViewController, RefreshableTab {
         leftCollectionView.reloadData()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         leftCollectionView.register(BLMenuLineCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        leftCollectionView.selectItem(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .top)
-        collectionView(leftCollectionView, didSelectItemAt: IndexPath(row: 1, section: 0))
+        let initialIndexPath = IndexPath(item: 1, section: 0)
+        leftCollectionView.selectItem(at: initialIndexPath, animated: false, scrollPosition: .top)
+        collectionView(leftCollectionView, didSelectItemAt: initialIndexPath)
         WebRequest.requestLoginInfo { [weak self] response in
             switch response {
             case let .success(json):
