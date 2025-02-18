@@ -18,7 +18,7 @@ class MenusViewController: UIViewController, RefreshableTab {
     @IBOutlet var contentView: UIView!
     @IBOutlet var avatarImageView: UIImageView!
     @IBOutlet var usernameLabel: UILabel!
-    @IBOutlet var leftCollectionView: BSCollectionVIew!
+    @IBOutlet var leftCollectionView: BSCollectionView!
     weak var currentViewController: UIViewController?
     private var menuIsShowing = false
 

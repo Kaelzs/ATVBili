@@ -11,7 +11,7 @@
 		0A41EE1C2A63102B0066444C /* dm.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A41EE1A2A63102B0066444C /* dm.pb.swift */; };
 		0A41EE1D2A63102B0066444C /* dmView.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A41EE1B2A63102B0066444C /* dmView.pb.swift */; };
 		1801D59C2C377DC9001739E5 /* BLMenuLineCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1801D59B2C377DC9001739E5 /* BLMenuLineCollectionViewCell.swift */; };
-		1801D59E2C377DCF001739E5 /* BSCollectionVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1801D59D2C377DCF001739E5 /* BSCollectionVIew.swift */; };
+		1801D59E2C377DCF001739E5 /* BSCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1801D59D2C377DCF001739E5 /* BSCollectionView.swift */; };
 		1836FCCB2C32A02300B5503A /* BLCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1836FCC92C32A02300B5503A /* BLCoverView.swift */; };
 		1836FCCC2C32A02300B5503A /* BLCoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1836FCCA2C32A02300B5503A /* BLCoverView.xib */; };
 		189D79B02C3699E500CE6D1D /* MenusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D79AF2C3699E500CE6D1D /* MenusViewController.swift */; };
@@ -113,6 +113,7 @@
 		49FB8EC0291F4C520045D5DE /* VMaskProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB8EBF291F4C520045D5DE /* VMaskProvider.swift */; };
 		49FB8EE929208EBE0045D5DE /* SidxParseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FB8EE829208EBE0045D5DE /* SidxParseUtil.swift */; };
 		695081FB2D0FD9E30063044D /* PocketSVG in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 49078E46291BEA2400F556BD /* PocketSVG */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9F4775AF2D64F24600B4E4C4 /* RefreshableTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4775AE2D64F23B00B4E4C4 /* RefreshableTab.swift */; };
 		9FD595C22D64B73A00105FF1 /* BLBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD595C12D64B73500105FF1 /* BLBackgroundView.swift */; };
 		AE2B41552912706700BF2B0B /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2B41542912706700BF2B0B /* SearchResultViewController.swift */; };
 		AE2B41572914C02000BF2B0B /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE2B41562914C02000BF2B0B /* Int.swift */; };
@@ -173,7 +174,7 @@
 		0A41EE1A2A63102B0066444C /* dm.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dm.pb.swift; sourceTree = "<group>"; };
 		0A41EE1B2A63102B0066444C /* dmView.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = dmView.pb.swift; sourceTree = "<group>"; };
 		1801D59B2C377DC9001739E5 /* BLMenuLineCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLMenuLineCollectionViewCell.swift; sourceTree = "<group>"; };
-		1801D59D2C377DCF001739E5 /* BSCollectionVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSCollectionVIew.swift; sourceTree = "<group>"; };
+		1801D59D2C377DCF001739E5 /* BSCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSCollectionView.swift; sourceTree = "<group>"; };
 		1836FCC92C32A02300B5503A /* BLCoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLCoverView.swift; sourceTree = "<group>"; };
 		1836FCCA2C32A02300B5503A /* BLCoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BLCoverView.xib; sourceTree = "<group>"; };
 		189D79AF2C3699E500CE6D1D /* MenusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenusViewController.swift; sourceTree = "<group>"; };
@@ -780,7 +781,7 @@
 				F9B57353260F5F7400771ED5 /* AppDelegate.swift */,
 				F9B57357260F5F7400771ED5 /* Main.storyboard */,
 				F927ED8C2610A5A800EAB8E3 /* LoginViewController.swift */,
-				1801D59D2C377DCF001739E5 /* BSCollectionVIew.swift */,
+				1801D59D2C377DCF001739E5 /* BSCollectionView.swift */,
 				1801D59B2C377DC9001739E5 /* BLMenuLineCollectionViewCell.swift */,
 				189D79AF2C3699E500CE6D1D /* MenusViewController.swift */,
 				F927ED6A2610391000EAB8E3 /* Vendor */,
@@ -953,7 +954,7 @@
 				F9171D6629026AC5002868C7 /* TitleSupplementaryView.swift in Sources */,
 				492138A02CD5CA6000891D56 /* SponsorBlockRequest.swift in Sources */,
 				498CF2A12B63AABE0009793E /* metablock.c in Sources */,
-				1801D59E2C377DCF001739E5 /* BSCollectionVIew.swift in Sources */,
+				1801D59E2C377DCF001739E5 /* BSCollectionView.swift in Sources */,
 				F99D28EA26195EC200F8E66A /* UIView+Layout.swift in Sources */,
 				498CF29D2B63AABE0009793E /* brotli_bit_stream.c in Sources */,
 				498CF2A62B63AABE0009793E /* state.c in Sources */,
