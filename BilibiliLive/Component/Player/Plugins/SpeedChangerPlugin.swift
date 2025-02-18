@@ -66,6 +66,9 @@ class SpeedChangerPlugin: NSObject, CommonPlayerPlugin {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.fadeOutNotifyView()
             }
+        } else {
+            notifyView?.alpha = 0
+            notifyView?.removeFromSuperview()
         }
     }
 
