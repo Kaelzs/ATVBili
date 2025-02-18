@@ -141,8 +141,13 @@ class VideoDetailViewController: UIViewController {
         ])
         focusGuide.preferredFocusEnvironments = [dislikeButton]
 
+        if let flowLayout = replysCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.minimumLineSpacing = 20
+            flowLayout.minimumInteritemSpacing = 20
+        }
+        replysCollectionView.contentInset = UIEdgeInsets(top: 0, left: 40, bottom: 0, right: 40)
         replysCollectionView.publisher(for: \.contentSize).sink { [weak self] newSize in
-//            self?.repliesCollectionViewHeightConstraints.constant = newSize.height
+            self?.repliesCollectionViewHeightConstraints.constant = newSize.height
             self?.view.setNeedsLayout()
         }.store(in: &subscriptions)
     }

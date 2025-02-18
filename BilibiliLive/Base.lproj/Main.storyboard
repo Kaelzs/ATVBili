@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="23504" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="appleTV" appearance="light"/>
     <dependencies>
+        <deployment identifier="tvOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -676,7 +677,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="440" id="dCt-K6-G5Q"/>
                                                                     </constraints>
-                                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q3p-JN-DhJ">
+                                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="q3p-JN-DhJ">
                                                                         <size key="itemSize" width="582" height="360"/>
                                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -684,7 +685,7 @@
                                                                     </collectionViewFlowLayout>
                                                                     <cells>
                                                                         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReplyCell" id="gxq-A8-Ahf" customClass="ReplyCell" customModule="BilibiliLive" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="40" width="582" height="360"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="582" height="360"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                             <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="91g-YW-NBL">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="582" height="360"/>
@@ -829,6 +830,7 @@
                         <outlet property="playButton" destination="lfB-VX-ver" id="9XU-MT-KOf"/>
                         <outlet property="playCountLabel" destination="ahl-Fa-Qpg" id="q6V-be-wNj"/>
                         <outlet property="recommandCollectionView" destination="nw1-cq-9yk" id="w8m-bc-mWQ"/>
+                        <outlet property="repliesCollectionViewHeightConstraints" destination="dCt-K6-G5Q" id="QO5-q0-y7Z"/>
                         <outlet property="replysCollectionView" destination="zj0-CY-pLt" id="8h4-LO-bUs"/>
                         <outlet property="scrollView" destination="Dm8-CL-kxU" id="R6I-to-71J"/>
                         <outlet property="timeView" destination="WoK-Jx-0C3" id="ymw-GX-6C7"/>
