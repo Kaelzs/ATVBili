@@ -188,6 +188,13 @@ class SettingsViewController: UIViewController {
         }
         cellModels.append(localMask)
 
+        let danmuRemoveDup = CellModel(title: "移除重复弹幕", desp: Settings.enableDanmuRemoveDup ? "开" : "关") {
+            [weak self] in
+            Settings.enableDanmuRemoveDup.toggle()
+            self?.setupData()
+        }
+        cellModels.append(danmuRemoveDup)
+
         let match = CellModel(title: "匹配视频内容", desp: Settings.contentMatch ? "开" : "关") {
             [weak self] in
             Settings.contentMatch.toggle()
@@ -208,13 +215,6 @@ class SettingsViewController: UIViewController {
             self?.setupData()
         }
         cellModels.append(sideMenuAutoSelectChange)
-
-        let showVideoCover = CellModel(title: "弹出底部视频详情", desp: Settings.showCover ? "开" : "关") {
-            [weak self] in
-            Settings.showCover.toggle()
-            self?.setupData()
-        }
-        cellModels.append(showVideoCover)
 
         let danmuFilter = CellModel(title: "用户自定义弹幕屏蔽", desp: Settings.enableDanmuFilter ? "开" : "关") {
             [weak self] in

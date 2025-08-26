@@ -1,11 +1,12 @@
 //
-//  LiveInfoViewModel.swift
+//  LivePlayerViewModel.swift
 //  BilibiliLive
 //
 //  Created by yicheng on 2024/5/13.
 //
 
 import Alamofire
+import Foundation
 import SwiftyJSON
 
 enum LiveError: String, LocalizedError {
@@ -167,7 +168,7 @@ class LivePlayerViewModel {
     }
 
     @MainActor private func initDanmu() async -> [CommonPlayerPlugin] {
-        danMuProvider = LiveDanMuProvider(roomID: roomID)
+        danMuProvider = LiveDanMuProvider(roomID: roomID, removeDup: Settings.enableDanmuRemoveDup)
         let danmuPlugin = DanmuViewPlugin(provider: danMuProvider!)
 
         try? await danMuProvider?.start()
