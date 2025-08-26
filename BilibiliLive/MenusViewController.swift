@@ -149,6 +149,7 @@ class MenusViewController: UIViewController, RefreshableTab {
         cellModels.append(CellModel(iconImage: UIImage(systemName: "livephoto.play"), title: "热门", contentVC: HotViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "arrow.up.and.person.rectangle.portrait"), title: "排行榜", contentVC: RankingViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "star"), title: "收藏", contentVC: FavoriteViewController()))
+        cellModels.append(CellModel(iconImage: UIImage(systemName: "clock"), title: "历史记录", contentVC: HistoryViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "gear"), title: "设置", contentVC: PersonalViewController.create()))
 
         let logout = CellModel(iconImage: UIImage(systemName: "figure.run"), title: "登出", autoSelect: false) {

@@ -126,7 +126,6 @@ class PersonalViewController: UIViewController, RefreshableTab {
         }))
         cellModels.append(CellModel(title: "关注UP", contentVC: FollowUpsViewController()))
         cellModels.append(CellModel(title: "稍后再看", contentVC: ToViewViewController()))
-        cellModels.append(CellModel(title: "历史记录", contentVC: HistoryViewController()))
         cellModels.append(CellModel(title: "每周必看", contentVC: WeeklyWatchViewController()))
 
         let logout = CellModel(title: "登出", autoSelect: false) {
