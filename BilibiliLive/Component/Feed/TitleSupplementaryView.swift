@@ -29,10 +29,9 @@ extension TitleSupplementaryView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.snp.makeConstraints { make in
-            make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(15)
         }
         label.font = UIFont.preferredFont(forTextStyle: .title3)
     }

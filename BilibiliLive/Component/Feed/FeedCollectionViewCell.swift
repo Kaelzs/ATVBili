@@ -39,8 +39,6 @@ class FeedCollectionViewCell: BLMotionCollectionViewCell {
 
         imageView.addSubview(avatarView)
 
-//        sortLabel.alpha = 0.7
-
         infoView.alpha = 0.8
         contentView.addSubview(infoView)
         infoView.snp.makeConstraints { make in
@@ -48,26 +46,32 @@ class FeedCollectionViewCell: BLMotionCollectionViewCell {
             make.top.equalTo(imageView.snp.bottom).offset(8)
         }
 
+        let vStackView = UIStackView()
+        vStackView.axis = .vertical
         let hStackView = UIStackView()
-        let stackView = UIStackView()
-        infoView.addSubview(hStackView)
+        hStackView.axis = .horizontal
+        hStackView.alignment = .center
+        infoView.addSubview(vStackView)
 
-//        hStackView.addArrangedSubview(avatarView)
+        vStackView.addArrangedSubview(titleLabel)
+        let vSpacer = UIView()
+        vStackView.addArrangedSubview(vSpacer)
+        vStackView.addArrangedSubview(hStackView)
+
+        hStackView.addArrangedSubview(upLabel)
+        let hSpacer = UIView()
+        hStackView.addArrangedSubview(hSpacer)
         hStackView.addArrangedSubview(sortLabel)
-//        sortLabel.snp.makeConstraints { make in
-//            make.width.height.equalTo(70)
-//        }
-        sortLabel.textColor = .gray
 
-        hStackView.addArrangedSubview(stackView)
-        hStackView.snp.makeConstraints { make in
+        vStackView.spacing = 0
+        hStackView.spacing = 0
+
+        vStackView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().priority(.high)
-            make.height.equalTo(stackView.snp.height)
+            make.bottom.equalToSuperview().priority(.low)
+            make.height.equalTo(100)
         }
 
-        hStackView.alignment = .top
-        hStackView.spacing = 10
         avatarView.backgroundColor = .clear
         let style = styleOverride ?? Settings.displayStyle
         let aHeight: CGFloat = style == .large ? 44 : 33
@@ -76,19 +80,6 @@ class FeedCollectionViewCell: BLMotionCollectionViewCell {
             make.width.equalTo(avatarView.snp.height)
             make.height.equalTo(aHeight)
         }
-        stackView.setContentHuggingPriority(.required, for: .vertical)
-        avatarView.setContentHuggingPriority(.defaultLow, for: .vertical)
-        avatarView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        avatarView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        avatarView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        stackView.axis = .vertical
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(upLabel)
-        stackView.alignment = .leading
-        stackView.spacing = 6
-        stackView.setContentHuggingPriority(.required, for: .vertical)
-//        titleLabel.holdScrolling = true
         titleLabel.numberOfLines = 2
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
         titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -98,11 +89,14 @@ class FeedCollectionViewCell: BLMotionCollectionViewCell {
         upLabel.textColor = UIColor(named: "upTitleColor")
         upLabel.adjustsFontSizeToFitWidth = true
         upLabel.minimumScaleFactor = 0.1
+
+        sortLabel.textColor = UIColor(named: "upTitleColor")
+        sortLabel.alpha = 0.6
     }
 
     func setup(data: any DisplayData, indexPath: IndexPath? = nil) {
         titleLabel.text = data.title
-        if let index = indexPath, index.row <= 98 {
+        if let index = indexPath, index.row <= 998 {
             sortLabel.isHidden = false
             sortLabel.text = String(index.row + 1)
             sortLabel.sizeToFit()
@@ -193,9 +187,9 @@ extension FeedDisplayStyle {
     var groupFractionalHeight: CGFloat {
         switch self {
         case .big:
-            return 2 / 5
+            return 3 / 8
         case .large, .normal, .sideBar:
-            return 1 / 3
+            return 1 / 4
         }
     }
 
@@ -233,22 +227,22 @@ extension FeedDisplayStyle {
     var upFont: UIFont {
         switch self {
         case .large, .big:
-            return UIFont.systemFont(ofSize: 20)
+            return UIFont.systemFont(ofSize: 22)
         case .normal:
-            return UIFont.systemFont(ofSize: 20)
+            return UIFont.systemFont(ofSize: 22)
         case .sideBar:
-            return UIFont.systemFont(ofSize: 18, weight: .semibold)
+            return UIFont.systemFont(ofSize: 20, weight: .semibold)
         }
     }
 
     var sortFont: UIFont {
         switch self {
         case .large, .big:
-            return UIFont.systemFont(ofSize: 60, weight: .bold)
+            return UIFont.systemFont(ofSize: 22, weight: .bold)
         case .normal:
-            return UIFont.systemFont(ofSize: 50, weight: .bold)
+            return UIFont.systemFont(ofSize: 22, weight: .bold)
         case .sideBar:
-            return UIFont.systemFont(ofSize: 50, weight: .bold)
+            return UIFont.systemFont(ofSize: 20, weight: .bold)
         }
     }
 }

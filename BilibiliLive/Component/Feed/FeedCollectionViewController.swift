@@ -53,8 +53,6 @@ class FeedCollectionViewController: UIViewController {
         case main
     }
 
-    private var coverViewIsShowing = false
-
     var styleOverride: FeedDisplayStyle?
     var didSelect: ((any DisplayData) -> Void)?
     var didLongPress: ((any DisplayData) -> Void)?
@@ -63,11 +61,9 @@ class FeedCollectionViewController: UIViewController {
     var pageSize = 20
     var showHeader: Bool = true
     var headerText = ""
-    var coverViewHeight = 500.0
     let collectionEdgeInsetTop = 200.0
     var isShowCove = false
     var timer = Timer()
-    let coverView = BLCoverView()
     var nextFocusedIndexPath: IndexPath?
 
     let bgImageView = BLBackgroundView()
@@ -111,7 +107,7 @@ class FeedCollectionViewController: UIViewController {
 
     func appendData(displayData: [any DisplayData]) {
         isLoading = false
-        _displayData.append(contentsOf: displayData.map { AnyDispplayData(data: $0) }.filter { !_displayData.contains($0) })
+        _displayData.append(contentsOf: displayData.map { AnyDispplayData(data: $0) }.filter({ !_displayData.contains($0) }))
         if displayData.count < pageSize - 5 || displayData.count == 0 {
             finished = true
             return
@@ -142,28 +138,6 @@ class FeedCollectionViewController: UIViewController {
 
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-
-        view.addSubview(coverView)
-        coverView.setBlurEffectView()
-        coverView.setCornerRadius(cornerRadius: bigSornerRadius)
-        coverView.snp.makeConstraints { make in
-            make.left.equalTo(48)
-            make.right.equalTo(-48)
-            make.height.equalTo(coverViewHeight)
-            make.bottom.equalTo(view).offset(coverViewHeight)
-        }
-
-        NotificationCenter.default.addObserver(forName: EVENT_COLLECTION_TO_TOP, object: nil, queue: .main) { [weak self] _ in
-            guard let self, collectionView.visibleCells.count > 0 else { return }
-
-//            let indexPath = IndexPath(item: 0, section: 0)
-//            collectionView.scrollToItem(at: indexPath, at: .top, animated: true)
-//            collectionView.setContentOffset(CGPoint(x: 0, y: -collectionEdgeInsetTop), animated: true)
-
-            if coverViewIsShowing {
-                hiddenCoverView()
-            }
-        }
     }
 
     // MARK: - Private
@@ -181,7 +155,7 @@ class FeedCollectionViewController: UIViewController {
         // top
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(style.fractionalWidth),
-            heightDimension: .fractionalHeight(1)
+            heightDimension: .estimated(270)
         ))
         let hSpacing = style.hSpacing
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: hSpacing, bottom: 0, trailing: hSpacing)
@@ -191,7 +165,7 @@ class FeedCollectionViewController: UIViewController {
             heightDimension: .fractionalHeight(style.groupFractionalHeight)
         ), repeatingSubitem: item, count: style.feedColCount)
 
-        let vSpacing: CGFloat = style == .large ? 34 : 26
+        let vSpacing: CGFloat = style == .large ? 46 : 38
         let baseSpacing: CGFloat = style == .sideBar ? 34 : 0
         group.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .fixed(baseSpacing), top: .fixed(vSpacing), trailing: .fixed(0), bottom: .fixed(vSpacing))
 
@@ -202,7 +176,7 @@ class FeedCollectionViewController: UIViewController {
         }
 
         let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(44))
+                                               heightDimension: .estimated(60))
         if showHeader {
             let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: titleSize,
@@ -241,41 +215,6 @@ class FeedCollectionViewController: UIViewController {
                 self?.didLongPress?(displayData.data)
             }
         }
-    }
-
-    private func showCoverView(viewHeight: CGFloat? = 0, bottom: CGFloat? = -20, isListenBack: Bool? = true, withDuration: TimeInterval? = 0.4) {
-        if isListenBack! {
-            timer.invalidate()
-        }
-
-        setCoverView(indexPath: nextFocusedIndexPath!)
-        coverView.isHidden = false
-        UIView.animate(withDuration: withDuration!, delay: 0, options: .curveEaseOut) {
-            self.coverView.snp.updateConstraints { make in
-                make.bottom.equalTo(self.view).offset(bottom!)
-                make.height.equalTo(viewHeight! > 0 ? viewHeight! : self.coverViewHeight)
-            }
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.coverView.setCornerRadius(cornerRadius: bigSornerRadius, shadowColor: .black, shadowAlpha: 0.2, tag: 1001)
-            self.coverViewIsShowing = true
-        }
-    }
-
-    private func hiddenCoverView(completion: (() -> Void)? = nil) {
-        UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseOut) {
-            self.coverView.snp.updateConstraints { make in
-                make.bottom.equalTo(self.view).offset(self.coverViewHeight)
-                make.height.equalTo(self.coverViewHeight)
-            }
-            self.view.layoutIfNeeded()
-        } completion: { _ in
-            self.coverViewIsShowing = false
-        }
-    }
-
-    @objc func timerTimeout() {
-        showCoverView()
     }
 }
 
@@ -334,27 +273,6 @@ extension FeedCollectionViewController: UICollectionViewDelegate {
             guard isShowCove else {
                 return
             }
-        }
-    }
-
-    func setCoverView(indexPath: IndexPath) {
-        if let data = dataSource.itemIdentifier(for: indexPath) {
-            coverView.coverImageView.kf.setImage(with: data.data.pic, placeholder: nil, options: nil) { _ in
-            }
-
-            if let avatar = data.data.avatar {
-                coverView.headImage.kf.setImage(with: avatar)
-            } else {
-                coverView.headImage.image = UIImage(named: "Bili")
-            }
-            coverView.nameLabel.text = data.data.ownerName
-            if let date = data.data.date {
-                coverView.timeLabel.isHidden = false
-                coverView.timeLabel.text = "⌚️:\(date)"
-            } else {
-                coverView.timeLabel.isHidden = true
-            }
-            coverView.titleLabel.text = data.data.title
         }
     }
 }
