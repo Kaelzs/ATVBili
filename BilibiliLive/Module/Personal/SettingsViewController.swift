@@ -246,6 +246,13 @@ class SettingsViewController: UIViewController {
         }
         cellModels.append(areaLimitCustomServer)
 
+        let remotePlayCommand = CellModel(title: "开启远程播放功能", desp: Settings.enableRemotePlayCommand ? "开" : "关") {
+            [weak self] in
+            Settings.enableRemotePlayCommand.toggle()
+            self?.setupData()
+        }
+        cellModels.append(remotePlayCommand)
+
         collectionView.reloadData()
     }
 

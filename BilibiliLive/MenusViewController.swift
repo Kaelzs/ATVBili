@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import Combine
 import Kingfisher
 import SwiftyJSON
 import UIKit
@@ -75,6 +76,10 @@ class MenusViewController: UIViewController, RefreshableTab {
         menuRecognizer?.allowedPressTypes = [NSNumber(value: UIPress.PressType.menu.rawValue)]
         view.addGestureRecognizer(menuRecognizer!)
         view.backgroundColor = UIColor(named: "mainBgColor")
+
+        if Settings.enableRemotePlayCommand {
+            startRequestPlayCommand()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -141,6 +146,58 @@ class MenusViewController: UIViewController, RefreshableTab {
 
     override var preferredFocusedView: UIView? {
         return leftCollectionView
+    }
+
+    struct PlayCommand: Decodable {
+        let bvid: String
+        let platform: String
+        let id: String
+    }
+
+    struct PlayCommandRequest: Encodable {}
+
+    var cancellableBag = Set<AnyCancellable>()
+    var playedCommandIDs: [String] = []
+
+    func startRequestPlayCommand() {
+        Timer.publish(every: 5, tolerance: 5, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.requestPlayCommand()
+            }
+            .store(in: &cancellableBag)
+    }
+
+    func requestPlayCommand() {
+        guard let uid = ApiRequest.getToken()?.mid else { return }
+        AF
+            .request("https://cheers.musichelper.org/api/getPlayCommand?uid=\(uid)")
+            .response { [weak self] response in
+                guard let data = response.data,
+                      let jsonDictionary = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                      let dataJSON = jsonDictionary["data"] as? [String: Any],
+                      let platform = dataJSON["platform"] as? String,
+                      platform == "bilibili",
+                      let bvid = dataJSON["bvid"] as? String,
+                      let pid = dataJSON["pid"] as? String
+                else {
+                    print("DEBUG: no valid play command")
+                    return
+                }
+
+                print("DEBUG: received play command: bvid=\(bvid), pid=\(pid)")
+                self?.playVideo(bvid: bvid, pid: pid)
+            }
+    }
+
+    private func playVideo(bvid: String, pid: String) {
+        guard !playedCommandIDs.contains(pid) else { return }
+        playedCommandIDs.append(pid)
+
+        let aid = BvidConvertor.bv2av(bvid: bvid)
+
+        let vc = VideoDetailViewController.create(aid: Int(aid), cid: 0)
+        vc.present(from: self)
     }
 
     func setupData() {

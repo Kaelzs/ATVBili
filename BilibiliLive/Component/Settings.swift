@@ -126,6 +126,9 @@ enum Settings {
 
     @UserDefaultCodable("Settings.danmuStrokeAlpha", defaultValue: .alpha_08)
     static var danmuStrokeAlpha: DanmuStrokeAlpha
+
+    @UserDefaultCodable("Settings.enableRemotePlayCommand", defaultValue: false)
+    static var enableRemotePlayCommand: Bool
 }
 
 struct MediaQuality {
