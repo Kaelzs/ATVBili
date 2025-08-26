@@ -111,7 +111,7 @@ class FeedCollectionViewController: UIViewController {
 
     func appendData(displayData: [any DisplayData]) {
         isLoading = false
-        _displayData.append(contentsOf: displayData.map { AnyDispplayData(data: $0) }.filter({ !_displayData.contains($0) }))
+        _displayData.append(contentsOf: displayData.map { AnyDispplayData(data: $0) }.filter { !_displayData.contains($0) })
         if displayData.count < pageSize - 5 || displayData.count == 0 {
             finished = true
             return
@@ -333,20 +333,6 @@ extension FeedCollectionViewController: UICollectionViewDelegate {
 
             guard isShowCove else {
                 return
-            }
-
-            if Settings.showCover {
-                if coverViewIsShowing {
-                    hiddenCoverView {}
-                } else {}
-
-                timer.invalidate()
-
-                BLAnimate(withDuration: 0.4) {
-                    self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerTimeout), userInfo: nil, repeats: true)
-
-                    self.view.layoutIfNeeded()
-                }
             }
         }
     }
