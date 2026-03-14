@@ -656,6 +656,7 @@ class RelatedVideoCell: BLMotionCollectionViewCell {
         }
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
         titleLabel.font = UIFont.systemFont(ofSize: 22)
+        titleLabel.fadeLength = 60
         stopScroll()
     }
 
