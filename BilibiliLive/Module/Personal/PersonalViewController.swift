@@ -155,9 +155,13 @@ class PersonalViewController: UIViewController, RefreshableTab {
         let alert = UIAlertController(title: "确定登出？", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "确定", style: .default) {
             _ in
-            ApiRequest.logout {
-                WebRequest.logout {
-                    AppDelegate.shared.showLogin()
+            WebRequest.logout {
+                ApiRequest.logout { hasRemainingAccount in
+                    if hasRemainingAccount {
+                        AccountManager.shared.refreshActiveAccountProfile()
+                    } else {
+                        AppDelegate.shared.showLogin()
+                    }
                 }
             }
         })

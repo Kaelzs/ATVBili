@@ -46,6 +46,29 @@ struct AnyDispplayData: Hashable {
     }
 }
 
+struct FeedHeaderConfig {
+    let elementKind: String
+    let estimatedHeight: CGFloat
+    let viewProvider: (UICollectionView, String, IndexPath) -> UICollectionReusableView?
+
+    init<T: UICollectionReusableView>(
+        viewType: T.Type,
+        estimatedHeight: CGFloat = 44,
+        configure: @escaping (T, IndexPath) -> Void
+    ) {
+        elementKind = String(describing: viewType)
+        self.estimatedHeight = estimatedHeight
+
+        let registration = UICollectionView.SupplementaryRegistration<T>(elementKind: elementKind) { view, _, indexPath in
+            configure(view, indexPath)
+        }
+
+        viewProvider = { collectionView, _, indexPath in
+            collectionView.dequeueConfiguredReusableSupplementary(using: registration, for: indexPath)
+        }
+    }
+}
+
 class FeedCollectionViewController: UIViewController {
     var collectionView: UICollectionView!
 
@@ -61,6 +84,7 @@ class FeedCollectionViewController: UIViewController {
     var pageSize = 20
     var showHeader: Bool = true
     var headerText = ""
+    var customHeaderConfig: FeedHeaderConfig?
     let collectionEdgeInsetTop = 200.0
     var isShowCove = false
     var timer = Timer()
@@ -175,12 +199,14 @@ class FeedCollectionViewController: UIViewController {
             section.contentInsets = NSDirectionalEdgeInsets(top: baseSpacing, leading: 0, bottom: 0, trailing: 0)
         }
 
-        let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(60))
         if showHeader {
+            let headerHeight = customHeaderConfig?.estimatedHeight ?? 60
+            let headerKind = customHeaderConfig?.elementKind ?? TitleSupplementaryView.reuseIdentifier
+            let titleSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .estimated(headerHeight))
             let titleSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: titleSize,
-                elementKind: TitleSupplementaryView.reuseIdentifier,
+                elementKind: headerKind,
                 alignment: .top
             )
             section.boundarySupplementaryItems = [titleSupplementary]
@@ -198,8 +224,13 @@ class FeedCollectionViewController: UIViewController {
             supplementaryView.label.text = self.headerText
         }
 
-        dataSource.supplementaryViewProvider = { _, _, index in
-            self.collectionView.dequeueConfiguredReusableSupplementary(
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, index in
+            guard let self else { return nil }
+            if let customHeaderConfig = self.customHeaderConfig, kind == customHeaderConfig.elementKind {
+                return customHeaderConfig.viewProvider(collectionView, kind, index)
+            }
+
+            return collectionView.dequeueConfiguredReusableSupplementary(
                 using: supplementaryRegistration, for: index
             )
         }
