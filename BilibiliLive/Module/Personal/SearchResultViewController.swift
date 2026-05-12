@@ -7,6 +7,7 @@
 
 import Combine
 import Kingfisher
+import SnapKit
 import UIKit
 
 class SearchResultViewController: UIViewController {
@@ -35,14 +36,19 @@ class SearchResultViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         configureDataSource()
+        collectionView.backgroundColor = .clear
 
         cancellable = $searchText
-            .filter({ $0.count > 0 })
             .debounce(for: 0.8, scheduler: RunLoop.main)
             .removeDuplicates()
             .sink {
                 [weak self] key in
                 guard let self = self else { return }
+                if key.isEmpty {
+                    currentSnapshot.deleteAllItems()
+                    dataSource.apply(currentSnapshot)
+                    return
+                }
                 WebRequest.requestSearchResult(key: key) { [weak self] searchResult in
                     guard let self = self else { return }
                     currentSnapshot.deleteAllItems()
@@ -75,6 +81,10 @@ class SearchResultViewController: UIViewController {
                     dataSource.apply(currentSnapshot)
                 }
             }
+    }
+
+    func setSearchText(_ text: String) {
+        searchText = text
     }
 }
 
@@ -197,8 +207,116 @@ extension SearchResultViewController: UICollectionViewDelegate {
 extension SearchResultViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
-            searchText = text
+            setSearchText(text)
         }
+    }
+}
+
+class SearchContainerViewController: UIViewController, RefreshableTab, UITextFieldDelegate {
+    private let backgroundView = BLBackgroundView()
+    private let searchBarContainer = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private let searchField = UITextField()
+    private let hintLabel = UILabel()
+    private let resultViewController = SearchResultViewController()
+    private var searchTextObserver: NSObjectProtocol?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = UIColor(named: "mainBgColor")
+
+        view.addSubview(backgroundView)
+        backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        backgroundView.addBlur()
+
+        view.addSubview(searchBarContainer)
+        searchBarContainer.layer.cornerRadius = bigSornerRadius
+        searchBarContainer.clipsToBounds = true
+        searchBarContainer.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
+            make.leading.equalToSuperview().offset(48)
+            make.trailing.equalToSuperview().inset(48)
+            make.height.equalTo(92)
+        }
+
+        searchField.placeholder = "搜索视频、番剧、UP 主"
+        searchField.returnKeyType = UIReturnKeyType.search
+        searchField.font = UIFont.systemFont(ofSize: 32, weight: .semibold)
+        searchField.textColor = UIColor.white
+        searchField.tintColor = UIColor.white
+        searchField.backgroundColor = UIColor.clear
+        searchField.borderStyle = .none
+        searchField.delegate = self
+        searchField.addTarget(self, action: #selector(handleSubmitTriggered), for: UIControl.Event.editingDidEndOnExit)
+        searchField.addTarget(self, action: #selector(handleSubmitTriggered), for: UIControl.Event.primaryActionTriggered)
+        searchBarContainer.contentView.addSubview(searchField)
+        searchField.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 18, left: 24, bottom: 18, right: 24))
+        }
+        searchTextObserver = NotificationCenter.default.addObserver(
+            forName: UITextField.textDidChangeNotification,
+            object: searchField,
+            queue: .main
+        ) { [weak self] _ in
+            self?.applySearchText()
+        }
+
+        hintLabel.text = "输入关键词开始搜索"
+        hintLabel.textColor = UIColor(named: "upTitleColor")
+        hintLabel.font = .systemFont(ofSize: 26, weight: .medium)
+        view.addSubview(hintLabel)
+        hintLabel.snp.makeConstraints { make in
+            make.leading.equalTo(searchBarContainer)
+            make.top.equalTo(searchBarContainer.snp.bottom).offset(20)
+        }
+
+        addChild(resultViewController)
+        view.addSubview(resultViewController.view)
+        resultViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(hintLabel.snp.bottom).offset(8)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        resultViewController.didMove(toParent: self)
+    }
+
+    deinit {
+        if let searchTextObserver {
+            NotificationCenter.default.removeObserver(searchTextObserver)
+        }
+    }
+
+    override var preferredFocusedView: UIView? {
+        searchField
+    }
+
+    func reloadData() {}
+
+    private func applySearchText() {
+        let text = searchField.text ?? ""
+        hintLabel.isHidden = !text.isEmpty
+        resultViewController.setSearchText(text)
+    }
+
+    @objc private func handleSubmitTriggered() {
+        applySearchText()
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        hintLabel.isHidden = false
+        resultViewController.setSearchText("")
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        applySearchText()
+        textField.resignFirstResponder()
+        return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        applySearchText()
     }
 }
 

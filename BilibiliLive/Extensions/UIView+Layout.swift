@@ -42,9 +42,37 @@ extension UIView {
                            cornerMask: CACornerMask? = nil,
                            alpha: CGFloat = 1.0)
     {
-        var setStyle = style
+        let eView = getblurEffectView(style: style)
+        eView.alpha = alpha
+        eView.isUserInteractionEnabled = true
+        addSubview(eView)
+        eView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
-        let eView = getblurEffectView(style: setStyle)
+        if cornerRadius ?? 0 > 0 {
+            eView.contentView.setCornerRadius(cornerRadius: cornerRadius!, cornerMask: cornerMask)
+        }
+
+        sendSubviewToBack(eView)
+    }
+
+    func setGlassEffectView(cornerRadius: CGFloat? = 0,
+                            cornerMask: CACornerMask? = nil,
+                            tintColor: UIColor? = nil,
+                            alpha: CGFloat = 1.0,
+                            clear: Bool = false)
+    {
+        guard #available(tvOS 26.0, *) else {
+            setBlurEffectView(style: .regular, cornerRadius: cornerRadius, cornerMask: cornerMask, alpha: alpha)
+            return
+        }
+
+        let effect = UIGlassEffect(style: clear ? .clear : .regular)
+        effect.tintColor = tintColor
+        effect.isInteractive = true
+
+        let eView = UIVisualEffectView(effect: effect)
         eView.alpha = alpha
         eView.isUserInteractionEnabled = true
         addSubview(eView)

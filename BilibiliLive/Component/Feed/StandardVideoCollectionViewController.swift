@@ -12,7 +12,11 @@ protocol PlayableData: DisplayData {
     var cid: Int { get }
 }
 
-class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, RefreshableTab {
+protocol SidebarMenuPresentable: AnyObject {
+    var backMenuAction: (() -> Void)? { get set }
+}
+
+class StandardVideoCollectionViewController<T: PlayableData>: UIViewController, RefreshableTab, SidebarMenuPresentable {
     let collectionVC = FeedCollectionViewController()
     var lastReloadDate = Date()
     var reloadInterval: TimeInterval = 60 * 60

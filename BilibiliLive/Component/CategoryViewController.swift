@@ -19,6 +19,7 @@ class CategoryViewController: UIViewController, RefreshableTab {
     var categories = [CategoryDisplayModel]()
     let contentView = UIView()
     weak var currentViewController: UIViewController?
+    var backMenuAction: (() -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,9 @@ class CategoryViewController: UIViewController, RefreshableTab {
         currentViewController?.willMove(toParent: nil)
         currentViewController?.view.removeFromSuperview()
         currentViewController?.removeFromParent()
+        if var sidebarMenuPresentable = vc as? SidebarMenuPresentable {
+            sidebarMenuPresentable.backMenuAction = backMenuAction
+        }
         currentViewController = vc
         addChild(vc)
         contentView.addSubview(vc.view)

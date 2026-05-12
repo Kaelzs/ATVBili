@@ -277,7 +277,15 @@ extension FeedCollectionViewController: UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, didUpdateFocusIn context: UICollectionViewFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
-        print("didUpdateFocusIn")
+        if styleOverride == .sideBar,
+           let previousIndexPath = context.previouslyFocusedIndexPath,
+           context.nextFocusedIndexPath == nil,
+           context.focusHeading.contains(.left),
+           previousIndexPath.item % (styleOverride ?? Settings.displayStyle).feedColCount == 0
+        {
+            backMenuAction?()
+            return
+        }
 
         if let indexPath = context.nextFocusedIndexPath {
             if let data = dataSource.itemIdentifier(for: indexPath) {

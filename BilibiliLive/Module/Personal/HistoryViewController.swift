@@ -9,11 +9,18 @@ import Alamofire
 import SwiftyJSON
 import UIKit
 
-class HistoryViewController: UIViewController {
+class HistoryViewController: UIViewController, SidebarMenuPresentable {
     let collectionVC = FeedCollectionViewController()
+    var backMenuAction: (() -> Void)? {
+        didSet {
+            collectionVC.backMenuAction = backMenuAction
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionVC.styleOverride = .sideBar
+        collectionVC.backMenuAction = backMenuAction
         collectionVC.show(in: self)
         collectionVC.didSelect = {
             [weak self] in

@@ -25,8 +25,13 @@ class MenusViewController: UIViewController, RefreshableTab {
 
     @IBOutlet var menusView: UIView! {
         didSet {
-            menusView.setBlurEffectView(cornerRadius: lessBigSornerRadius)
-            menusView.setCornerRadius(cornerRadius: lessBigSornerRadius, borderColor: .lightGray, borderWidth: 0.5)
+            if #available(tvOS 26.0, *) {
+                menusView.setGlassEffectView(cornerRadius: lessBigSornerRadius, tintColor: UIColor.white.withAlphaComponent(0.06), alpha: 0.96)
+                menusView.setBlurEffectView(style: .prominent, cornerRadius: lessBigSornerRadius, alpha: 0.82)
+            } else {
+                menusView.setBlurEffectView(style: .prominent, cornerRadius: lessBigSornerRadius, alpha: 0.94)
+            }
+            menusView.setCornerRadius(cornerRadius: lessBigSornerRadius)
         }
     }
 
@@ -58,6 +63,7 @@ class MenusViewController: UIViewController, RefreshableTab {
         leftCollectionView.reloadData()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         leftCollectionView.register(BLMenuLineCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        leftCollectionView.remembersLastFocusedIndexPath = true
         let initialIndexPath = IndexPath(item: 1, section: 0)
         leftCollectionView.selectItem(at: initialIndexPath, animated: false, scrollPosition: .top)
         collectionView(leftCollectionView, didSelectItemAt: initialIndexPath)
@@ -118,6 +124,8 @@ class MenusViewController: UIViewController, RefreshableTab {
             self.menuIsShowing = true
             self.leftCollectionView.setNeedsLayout()
             self.leftCollectionView.layoutIfNeeded()
+            self.setNeedsFocusUpdate()
+            self.updateFocusIfNeeded()
         }
     }
 
@@ -205,6 +213,7 @@ class MenusViewController: UIViewController, RefreshableTab {
         cellModels.append(CellModel(iconImage: UIImage(systemName: "timelapse"), title: "推荐", contentVC: FeedViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "livephoto.play"), title: "热门", contentVC: HotViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "arrow.up.and.person.rectangle.portrait"), title: "排行榜", contentVC: RankingViewController()))
+        cellModels.append(CellModel(iconImage: UIImage(systemName: "magnifyingglass"), title: "搜索", contentVC: SearchContainerViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "star"), title: "收藏", contentVC: FavoriteViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "clock"), title: "历史记录", contentVC: HistoryViewController()))
         cellModels.append(CellModel(iconImage: UIImage(systemName: "gear"), title: "设置", contentVC: PersonalViewController.create()))
@@ -221,6 +230,11 @@ class MenusViewController: UIViewController, RefreshableTab {
         currentViewController?.view.removeFromSuperview()
         currentViewController?.removeFromParent()
 
+        if var sidebarMenuPresentable = vc as? SidebarMenuPresentable {
+            sidebarMenuPresentable.backMenuAction = { [weak self] in
+                self?.showMensu()
+            }
+        }
         currentViewController = vc
         addChild(vc)
         contentView.addSubview(vc.view)
@@ -260,9 +274,9 @@ extension MenusViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! BLMenuLineCollectionViewCell
         cell.titleLabel.text = cellModels[indexPath.item].title
         if let icon = cellModels[indexPath.item].iconImage {
-            cell.iconImageView.image = icon
-            cell.iconImageView.setImageColor(color: UIColor(named: "upTitleColor"))
+            cell.iconImageView.image = icon.withRenderingMode(.alwaysTemplate)
         }
+        cell.updateView()
         return cell
     }
 
